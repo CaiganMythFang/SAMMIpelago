@@ -28,6 +28,7 @@ V0.9.0
     Added toggles to the OBS SAMMI Bridge which control the sending of certain messages
         These messages are the various RAW messages SAMMIpelago can send, which contains items and locations in ID format instead of the translated format 
         (Example : "12345" instead of "Behind the Waterfall"). All of these are off by default, but can be enabled if a user wants to utilize the data themselves.
+    Updated the included Example Deck, changing and fixing some of the test buttons.
 
 V0.8.0a
     
