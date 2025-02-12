@@ -76,6 +76,7 @@ const FIELDS = [
   { name: "Name", },
   { name: "Password", type: "password" },
   // { name: "Separate Messages", type: "checkbox", default: false },
+  { name: "Local / Insecure Server", type: "checkbox", default: false},
   { name: "Send Raw Bounced Message", type: "checkbox", default: false },
   { name: "Send Raw Datapackage Messages", type: "checkbox", default: false },
   { name: "Send Raw LocationInfo Message", type: "checkbox", default: false },
@@ -143,6 +144,7 @@ let SAMMIPELAGO_DATA_GAME_ITEMS = null;
 let SAMMIPELAGO_DATA_GAME_LOCATIONS = null;
 
 function addToMessageBuffer(triggerName, triggerData) {
+  console.log(`Adding ${triggerName} message to buffer`);
   SAMMIPELAGO_MESSAGE_BUFFER.push([triggerName, triggerData]);
 }
 
@@ -155,6 +157,7 @@ function startSendingBufferMessages() {
 function sendNextMessageFromBuffer() {
   if (SAMMIPELAGO_MESSAGE_BUFFER.length > 0) {
     const message = SAMMIPELAGO_MESSAGE_BUFFER.shift();
+    console.log(`Sending ${message[0]} message from buffer with about ${JSON.stringify(message[1]).length} characters`);
     SAMMI.triggerExt(...message);
     SAMMIPELAGO_MESSAGE_BUFFER_TIMEOUT_ID = setTimeout(sendNextMessageFromBuffer, SAMMIPELAGO_MESSAGE_BUFFER_THROTTLE_DELAY_MS);
   } else {
@@ -210,7 +213,8 @@ function sammipelagoConnect(details) {
     SAMMIPELAGO_WEBSOCKET.close();
   }
 
-  SAMMIPELAGO_WEBSOCKET = new WebSocket(`wss://${details.Server}:${details.Port}`);
+  var protocol = details["Local / Insecure Server"] ? "ws" : "wss";
+  SAMMIPELAGO_WEBSOCKET = new WebSocket(`${protocol}://${details.Server}:${details.Port}`);
 
   SAMMIPELAGO_WEBSOCKET.addEventListener("open", () => {
     addToMessageBuffer('SAMMIpelago Websocket Connected', {});
@@ -219,8 +223,10 @@ function sammipelagoConnect(details) {
 
   SAMMIPELAGO_WEBSOCKET.addEventListener("message", (event) => {
     const messages = JSON.parse(event.data);
+    console.log(`Received ${messages.length} message, details follow`);
 
     for (const message of messages) {
+      console.log(`Processing received message ${message.cmd}...`);
       switch(message.cmd) {
         case "RoomInfo":
           SAMMIPELAGO_GAME_LIST = message.games;
