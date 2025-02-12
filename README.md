@@ -1,7 +1,7 @@
 # SAMMIpelago
 SAMMIpelago - An Archipelago Integration Extension for SAMMI
 by Caigan and Erdenshire
-version 0.9.0_beta
+version 0.9.1_beta
 ----------
 
 --INSTALL--
@@ -20,6 +20,11 @@ For full documentation on how to use this extension, please visit : https://docs
 
 --CHANGELOG--
 
+V0.9.1 
+    
+    Added a "Local / Insecure Server" toggle option to the SAMMI Bridge.
+        This is for connecting to local servers or insecure servers.
+    
 V0.9.0 
     
     Increased delay between messages from 75ms to 200ms
