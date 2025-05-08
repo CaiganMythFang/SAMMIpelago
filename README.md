@@ -1,7 +1,7 @@
 # SAMMIpelago
 SAMMIpelago - An Archipelago Integration Extension for SAMMI
 by Caigan and Erdenshire
-version 0.9.1_beta
+version 0.10.0_beta
 ----------
 
 --INSTALL--
@@ -19,6 +19,13 @@ You must have OBS running with the SAMMI Bridge to connect.
 For full documentation on how to use this extension, please visit : https://docs.google.com/document/d/1TLdXEvEttrpAO0HhtxrtCHOQoRcQzSiuueUMl4NHldo/edit?usp=sharing
 
 --CHANGELOG--
+
+V0.10.0 
+    
+    Added 'DeathLink' tag to connection.
+        This enables DeathLink messages to be received by SAMMIPelago
+    Fixed issue and updated documentation on Bounced Raw messages
+        DeathLink messages are sent via Bounced Raw.
 
 V0.9.1 
     
