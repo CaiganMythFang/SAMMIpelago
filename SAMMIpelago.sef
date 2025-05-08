@@ -273,7 +273,7 @@ function sammipelagoConnect(details) {
               version: SAMMIPELAGO_SERVER_VERSION,
               uuid: "Testing",
               items_handling: 7, 
-              tags: [ "Tracker", "TextOnly" ], 
+              tags: [ "Tracker", "TextOnly", "DeathLink" ], 
               slot_data: true
             }]));  
           }
@@ -300,7 +300,6 @@ function sammipelagoConnect(details) {
           break;
 
         case "ReceivedItems":
-          console.log(JSON.stringify(message, null, 2));
           addToMessageBuffer('SAMMIpelago ReceivedItems_Processed', {
             ...message,
             items: message.items.map(item => ({
@@ -367,8 +366,8 @@ function sammipelagoConnect(details) {
       }
 
       const rawMessageTypeName = `SAMMIpelago ${message.cmd}_Raw`;
-      const messageControlName = Object.keys(CONTROLLED_RAW_MESSAGE_TYPES).filter(controlName => rawMessageTypeName.startsWith(controlName));
-      if ((messageControlName.length === 0) || CONTROLLED_RAW_MESSAGE_TYPES[messageControlName]) {
+      const messageControlName = Object.keys(CONTROLLED_RAW_MESSAGE_TYPES).find(controlName => rawMessageTypeName.startsWith(controlName));
+      if (!messageControlName || CONTROLLED_RAW_MESSAGE_TYPES[messageControlName]) {
         addToMessageBuffer(rawMessageTypeName, message);
       }
     }
